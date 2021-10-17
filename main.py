@@ -17,12 +17,18 @@ app.add_middleware(
 
 
 @app.get('/leaderboard/clips')
-def leaderboard():
+def leaderboard_clips():
     data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/leaderboard')
     return data.json()
 
 
 @app.get('/leaderboard/votes')
-def leaderboard():
+def leaderboard_votes():
     data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/votes/leaderboard')
+    return data.json()
+
+
+@app.get('/stats/clips')
+def stats_clips():
+    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/stats')
     return data.json()
