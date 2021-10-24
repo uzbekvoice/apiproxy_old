@@ -47,5 +47,7 @@ def stats_clips():
     data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/stats')
 
 
-
+@app.get('/stats/texts')
+def stats_texts():
+    data = requests.get('https://commonvoice.mozilla.org/sentence-collector/stats?locales=uz')
     return data.json()
