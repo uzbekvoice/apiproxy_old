@@ -45,6 +45,7 @@ def leaderboard_votes():
 @app.get('/stats/clips')
 def stats_clips():
     data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/stats')
+    return data.json()
 
 
 @app.get('/stats/texts')
