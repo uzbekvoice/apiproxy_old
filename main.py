@@ -16,19 +16,36 @@ app.add_middleware(
 )
 
 
+# https://commonvoice.mozilla.org/api/v1/uz/clips/leaderboard?cursor=[6,26]
+
 @app.get('/leaderboard/clips')
 def leaderboard_clips():
-    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/leaderboard')
+    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/leaderboard?cursor=[0,3]')
     return data.json()
 
 
 @app.get('/leaderboard/votes')
 def leaderboard_votes():
-    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/votes/leaderboard')
+    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/votes/leaderboard?cursor=[0,3]')
+    return data.json()
+
+
+@app.get('/leaderboard/clips/all')
+def leaderboard_clips():
+    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/leaderboard?cursor=[0,50]')
+    return data.json()
+
+
+@app.get('/leaderboard/votes/all')
+def leaderboard_votes():
+    data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/votes/leaderboard?cursor=[0,50]')
     return data.json()
 
 
 @app.get('/stats/clips')
 def stats_clips():
     data = requests.get('https://commonvoice.mozilla.org/api/v1/uz/clips/stats')
+
+
+
     return data.json()
