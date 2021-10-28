@@ -1,8 +1,13 @@
+
+import time
+from functools import lru_cache
+
 from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import requests
+
 
 app = FastAPI()
 
@@ -48,7 +53,19 @@ def stats_clips():
     return data.json()
 
 
-@app.get('/stats/texts')
-def stats_texts():
+@lru_cache()
+def fetch_text_stats(ttl_hash=None):
     data = requests.get('https://commonvoice.mozilla.org/sentence-collector/stats?locales=uz')
     return data.json()
+
+
+def get_ttl_hash(seconds=28800):
+    """Return the same value withing `seconds` time period"""
+    return round(time.time() / seconds)
+
+
+@app.get('/stats/texts')
+def stats_texts(reset: bool = False):
+    if reset:
+        fetch_text_stats.cache_clear()
+    return fetch_text_stats(ttl_hash=get_ttl_hash())
